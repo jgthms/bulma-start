@@ -1,0 +1,13 @@
+{
+  "name": "bulma-start",
+  "version": "0.0.1",
+  "description": "Start package for Bulma",
+  "keywords": [
+    "sass",
+    "bulma",
+    "css",
+    "start"
+  ],
+  "author": "Jeremy Thomas <bbxdesign@gmail.com> (http://jgthms.com)",
+  "license": "MIT"
+}
