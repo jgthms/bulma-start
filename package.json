@@ -1,6 +1,6 @@
 {
   "name": "bulma-start",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Start package for Bulma",
   "keywords": [
     "sass",
@@ -9,5 +9,24 @@
     "start"
   ],
   "author": "Jeremy Thomas <bbxdesign@gmail.com> (http://jgthms.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^7.1.5",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015-ie": "^6.7.0",
+    "bulma": "^0.6.0",
+    "node-sass": "^4.5.3",
+    "postcss-cli": "^4.1.1"
+  },
+  "scripts": {
+    "css-deploy": "npm run css-build && npm run css-postcss",
+    "css-build": "node-sass _sass/main.scss css/main.css",
+    "css-postcss": "postcss --use autoprefixer --output css/main.css css/main.css",
+    "css-watch": "npm run css-build -- --watch",
+    "deploy": "npm run css-deploy && npm run js-build",
+    "js-build": "babel _javascript --out-dir lib",
+    "js-watch": "npm run js-build -- --watch",
+    "start": "npm run css-watch | npm run js-watch"
+  }
 }
