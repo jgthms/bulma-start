@@ -1,6 +1,6 @@
 {
   "name": "bulma-start",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Start package for Bulma",
   "keywords": [
     "sass",
@@ -11,22 +11,29 @@
   "author": "Jeremy Thomas <bbxdesign@gmail.com> (http://jgthms.com)",
   "license": "MIT",
   "devDependencies": {
-    "autoprefixer": "^7.1.5",
+    "autoprefixer": "^7.2.6",
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-es2015-ie": "^6.7.0",
-    "bulma": "^0.6.0",
-    "node-sass": "^4.5.3",
-    "postcss-cli": "^4.1.1"
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2016": "^6.24.1",
+    "browser-sync": "^2.23.6",
+    "bulma": "^0.6.2",
+    "cssnano": "^3.10.0",
+    "font-awesome": "^4.7.0",
+    "node-sass": "^4.7.2",
+    "npm-run-all": "^4.1.2",
+    "onchange": "^3.3.0",
+    "postcss-cli": "^5.0.0"
   },
   "scripts": {
-    "css-deploy": "npm run css-build && npm run css-postcss",
-    "css-build": "node-sass _sass/main.scss css/main.css",
-    "css-postcss": "postcss --use autoprefixer --output css/main.css css/main.css",
-    "css-watch": "npm run css-build -- --watch",
-    "deploy": "npm run css-deploy && npm run js-build",
-    "js-build": "babel _javascript --out-dir lib",
-    "js-watch": "npm run js-build -- --watch",
-    "start": "npm run css-watch | npm run js-watch"
+    "build:css": "node-sass src/scss/main.scss dist/css/main.css",
+    "build:js": "babel src/js --out-dir dist/js",
+    "build": "npm-run-all build:*",
+    "deploy": "run-s build:* postcss",
+    "dev": "run-p build serve watch",
+    "postcss": "postcss dist/css/main.css --no-map -u autoprefixer cssnano -r",
+    "serve": "browser-sync start --server --files \"dist/**/*.js, dist/**/*.css, **/*.html, !node_modules/**/*.html\"",
+    "watch:css": "onchange \"src/scss/**/*.scss\" -- npm run build:css",
+    "watch:js": "onchange \"src/js/*.js\" -- npm run build:js",
+    "watch": "npm-run-all watch:*"
   }
 }
