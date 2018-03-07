@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My first Bulma website</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="dist/css/main.css">
   </head>
   <body>
     <section class="hero is-medium is-primary">
@@ -33,7 +33,7 @@
             <div class="content">
               <h3>What's included</h3>
               <p>
-                The <code>npm</code> dependencies included in <code>package.json</code> are:
+                Among the <code>npm</code> dependencies included in <code>package.json</code> are:
               </p>
               <ul>
                 <li>
@@ -49,7 +49,7 @@
                   <code><a href="https://babeljs.io/docs/usage/cli/">babel-cli</a></code>,
                   <code><a href="https://github.com/babel/babel-preset-env">babel-preset-env</a></code>
                   and
-                  <code><a href="https://github.com/jmcriffey/babel-preset-es2015-ie">babel-preset-es2015-ie</a></code>
+                  <code><a href="https://github.com/babel/babel/tree/master/packages/babel-preset-es2016">babel-preset-2016</a></code>
                   for compiling ES6 JavaScript files
                 </li>
               </ul>
@@ -67,10 +67,10 @@
                   <code>index.html</code> this HTML5 file
                 </li>
                 <li>
-                  <code>_sass/main.scss</code> a basic SCSS file that <strong>imports Bulma</strong> and explains how to <strong>customize</strong> your styles, and compiles to <code>css/main.css</code>
+                  <code>src/scss/main.scss</code> a basic SCSS file that <strong>imports Bulma</strong> and explains how to <strong>customize</strong> your styles, and compiles to <code>dist/css/main.css</code>
                 </li>
                 <li>
-                  <code>_javascript/main.js</code> an ES6 JavaScript that compiles to <code>lib/main.js</code>
+                  <code>src/js/main.js</code> an ES6 JavaScript that compiles to <code>dist/js/main.js</code>
                 </li>
               </ul>
               <h3>Try it out!</h3>
@@ -87,16 +87,16 @@
                 </li>
                 <li>
                   <p>
-                    <strong>Start</strong> the CSS and JS watchers:
+                    <strong>Run</strong> bulma-start:
                     <br>
-                    <pre><code>npm start</code></pre>
+                    <pre><code>npm run dev</code></pre>
                   </p>
                 </li>
                 <li>
                   <p>
-                    <strong>Edit</strong> <code>_sass/main.scss</code> by adding the following rule at the <strong>end</strong> of the file:
+                    <strong>Edit</strong> <code>src/scss/main.scss</code> by adding the following rule at the <strong>end</strong> of the file:
                     <br>
-                    <pre><code>html { background-color: $green;}</code></pre>
+                    <pre><code>html { background-color: $green; }</code></pre>
                   </p>
                 </li>
               </ol>
@@ -185,7 +185,7 @@
           <div class="column is-8-desktop is-offset-2-desktop">
             <p>
               <strong class="has-text-weight-semibold">
-                <a href="https://www.npmjs.com/package/bulma-start">bulma-start@0.0.1</a>
+                <a href="https://www.npmjs.com/package/bulma-start">bulma-start@0.0.3</a>
               </strong>
             </p>
             <p>
@@ -202,6 +202,6 @@
         </div>
       </div>
     </footer>
-    <script type="text/javascript" src="lib/main.js"></script>
+    <script type="text/javascript" src="dist/js/main.js"></script>
   </body>
 </html>
