@@ -29,7 +29,7 @@
     "build:js": "babel src/js --out-dir dist/js",
     "build": "npm-run-all build:*",
     "deploy": "run-s build:* postcss",
-    "dev": "run-p build serve watch",
+    "dev": "npm run build && run-p serve watch",
     "postcss": "postcss dist/css/main.css --no-map -u autoprefixer cssnano -r",
     "serve": "browser-sync start --server --files \"dist/**/*.js, dist/**/*.css, **/*.html, !node_modules/**/*.html\"",
     "watch:css": "onchange \"src/scss/**/*.scss\" -- npm run build:css",
