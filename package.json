@@ -22,12 +22,13 @@
   },
   "scripts": {
     "css-deploy": "npm run css-build && npm run css-postcss",
-    "css-build": "node-sass _sass/main.scss css/main.css",
-    "css-postcss": "postcss --use autoprefixer --output css/main.css css/main.css",
+    "css-build": "node-sass _sass/main.scss pub/css/main.css",
+    "css-postcss": "postcss --use autoprefixer --output pub/css/main.css pub/css/main.css",
     "css-watch": "npm run css-build -- --watch",
     "deploy": "npm run css-deploy && npm run js-build",
-    "js-build": "babel _javascript --out-dir lib",
+    "js-build": "babel _javascript --out-dir pub/lib",
     "js-watch": "npm run js-build -- --watch",
-    "start": "npm-run-all --parallel css-watch js-watch"
+	"index": "_shell/markdown-inline-tag -w views/index.html pub/index.html",
+    "start": "npm-run-all --parallel css-watch js-watch index"
   }
 }

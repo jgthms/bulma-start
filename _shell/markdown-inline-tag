@@ -1,0 +1,102 @@
+#!/usr/bin/env zsh
+
+# Copyright (C) 2012-2018 Dyne.org Foundation
+# 
+# Designed, written and maintained by Denis Roio <jaromil@dyne.org>
+#
+# This source  code is free  software; you can redistribute  it and/or
+# modify it under the terms of  the GNU Public License as published by
+# the Free  Software Foundation; either  version 3 of the  License, or
+# (at your option) any later version.
+#
+# This source code is distributed in  the hope that it will be useful,
+# but  WITHOUT ANY  WARRANTY;  without even  the  implied warranty  of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# Please refer to the GNU Public License for more details.
+#
+# You should have received a copy of the GNU Public License along with
+# this source code; if not, write to:
+# Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+parser=""
+
+# check for existance of pandoc in path
+if command -v pandoc > /dev/null; then
+	parser="pandoc -f gfm -t html5"
+else
+	echo "Required program not found: pandoc"
+	echo "Install pandoc on this system to render markdown"
+	return 1
+fi
+
+## temporary output
+TMPDIR=${TMPDIR:-/tmp}
+dtmp=`mktemp -d ${TMPDIR}/markdown-inline-tag.XXXXXXXXXX`
+[[ "$dtmp" == "" ]] && return 1
+otmp=`mktemp -p $dtmp`
+
+if [[ "$2" == "" ]]; then
+	echo "Render HTML files with <markdown> tagged content inline"
+	echo "usage: markdown-inline-tag [-w] input.html output.html"
+	return 1
+fi
+# TODO: better argument handling
+watch=0
+if [[ "$1" =~ "-w" ]]; then
+   watch=1
+   shift
+fi
+input="$1"
+output="$2"
+
+tokenize() {
+	#######################################
+	## we support the <markdown> tag inline
+
+	# parses the html and put all stuff contained in <markdown /> tags
+	# inside separate files, leaving a trace of them into the main html
+	# (a line starting with tmp.md$RAND)
+	awk 'BEGIN { srand(); markdown=0; outfile="" }
+/<markdown>/ { markdown=1; out="tmp.md" rand(); outfile="'"${dtmp}"'/" out;
+               print out; next }
+/<\/markdown>/ { markdown=0; next }
+{ if(markdown==1) { print $0 >outfile; next } else { print $0 } }
+' > $otmp
+}
+
+collate() {
+	# first pass marks the markdown parts and saves them separate
+	mds=(`find ${dtmp} -name 'tmp.md*'`)
+	# second pass substituted saved parts with rendered markdown
+	# parses all html and renders each markdown in the html
+	for i in $mds; do
+		md=`basename $i`
+		newtemp=`mktemp -p $dtmp`
+		cat $otmp | awk '
+/^'"$md"'/ { system("cat '"$i"' | '"$parser"'"); next }
+{ print $0; }' > $newtemp
+		rm $otmp; otmp=$newtemp
+	done
+}
+
+render() {
+	cat $input | tokenize
+	collate
+	cat $otmp > $output
+}
+
+if [[ $watch == 1 ]]; then
+	ts=""; tts=""
+	while true; do
+		ts=`stat $input | grep '^Change:'`
+		if [[ "$ts" != "$tts" ]]; then
+			render
+			tts="$ts"
+		fi
+		sleep .5
+	done
+else
+	render
+fi
+# clean up from temporary files
+rm -rf "$dtmp"
