@@ -28,6 +28,10 @@
     "deploy": "npm run css-deploy && npm run js-build",
     "js-build": "babel _javascript --out-dir lib",
     "js-watch": "npm run js-build -- --watch",
-    "start": "npm-run-all --parallel css-watch js-watch"
+    "auto-loading": "npx browser-sync start --server --files '*.html' --files 'css/*.css'",
+    "start": "npm-run-all --parallel css-watch js-watch auto-loading"
+  },
+  "dependencies": {
+    "browser-sync": "^2.26.3"
   }
 }
