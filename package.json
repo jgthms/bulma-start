@@ -15,7 +15,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015-ie": "^6.7.0",
-    "bulma": "^0.6.0",
+    "bulma": "^0.7.2",
     "node-sass": "^4.5.3",
     "postcss-cli": "^4.1.1",
     "npm-run-all": "^4.1.3"
