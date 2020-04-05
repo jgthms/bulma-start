@@ -47,11 +47,11 @@ cp -a $HOME/node_modules/bulma-start my-bulma-project
 
 Alternatively, you could do something similar with a GitHub clone as well.
 
+Here, it uses the [degit](https://www.npmjs.com/package/degit) library to clone the repo without any lengthy Git history.
+
 ```sh
 cd $HOME/projects
-git clone https://github.com/jgthms/bulma-start
-mv bulma-start my-bulma-project
-rm -rf my-bulma-project/.git     # cut its roots
+npx degit jgthms/bulma-start my-bulma-project
 ```
 
 Now, that you prepared the groundwork for your project, set up Bulma and run the watchers:
